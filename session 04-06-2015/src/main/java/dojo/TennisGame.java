@@ -1,8 +1,5 @@
 package dojo;
 
-/**
- * Created by mar on 4. 6. 2015.
- */
 public class TennisGame {
     public static final String GUEST = "guest";
     public static final String HOME = "home";
@@ -23,12 +20,7 @@ public class TennisGame {
     }
 
     public void homeScores() {
-        if (score.getHome() == 40 && (score.getGuests() < 40 || advantage.equals(HOME))) {
-            isOver = true;
-        }
-        if (score.getHome() == 40) {
-            advantage = advantage.equals(GUEST) ? "" : HOME;
-        }
+        processGameRules(HOME, score.getHome(), score.getGuests());
         score.setHome(incrementScore(score.getHome()));
     }
 
@@ -37,13 +29,17 @@ public class TennisGame {
     }
 
     public void guestScores() {
-        if (score.getGuests() == 40 && (score.getHome() < 40 || advantage.equals(GUEST))) {
+        processGameRules(GUEST, score.getGuests(),  score.getHome());
+        score.setGuest(incrementScore(score.getGuests()));
+    }
+
+    private void processGameRules(String team, int ownScore, int opponentScore) {
+        if (ownScore == 40 && (opponentScore < 40 || advantage.equals(team))) {
             isOver = true;
         }
-        if (score.getGuests() == 40) {
-            advantage = advantage.equals(HOME) ? "" : GUEST;
+        if (ownScore == 40) {
+            advantage = (!advantage.isEmpty() && !advantage.equals(team) ) ? "" : team;
         }
-        score.setGuest(incrementScore(score.getGuests()));
     }
 
     private int incrementScore(int score) {
