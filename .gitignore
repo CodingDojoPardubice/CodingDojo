@@ -240,3 +240,15 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+# ignore a single file
+mycode.class
+
+# ignore an entire directory
+/mydebugdir/
+
+# ignore a file type
+*.json
+
+# add an exception (using !) to the preceding rule to track a specific file
+!package.json
